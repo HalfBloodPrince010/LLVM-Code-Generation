@@ -931,6 +931,7 @@ static Triple::ObjectFormatType getDefaultFormat(const Triple &T) {
   case Triple::aarch64_32:
   case Triple::arm:
   case Triple::h2blb:
+  case Triple::asahi:
   case Triple::thumb:
   case Triple::x86:
   case Triple::x86_64:
@@ -1656,6 +1657,7 @@ unsigned Triple::getArchPointerBitWidth(llvm::Triple::ArchType Arch) {
 
   case llvm::Triple::avr:
   case llvm::Triple::h2blb:
+  case llvm::Triple::asahi:
   case llvm::Triple::msp430:
     return 16;
 
@@ -1777,6 +1779,7 @@ Triple Triple::get32BitArchVariant() const {
   case Triple::csky:
   case Triple::dxil:
   case Triple::h2blb:
+  case Triple::asahi:
   case Triple::hexagon:
   case Triple::hsail:
   case Triple::kalimba:
@@ -1844,6 +1847,7 @@ Triple Triple::get64BitArchVariant() const {
   case Triple::csky:
   case Triple::dxil:
   case Triple::h2blb:
+  case Triple::asahi:
   case Triple::hexagon:
   case Triple::kalimba:
   case Triple::lanai:
@@ -1928,6 +1932,7 @@ Triple Triple::getBigEndianArchVariant() const {
   case Triple::avr:
   case Triple::dxil:
   case Triple::h2blb:
+  case Triple::asahi:
   case Triple::hexagon:
   case Triple::hsail64:
   case Triple::hsail:
@@ -2032,6 +2037,7 @@ bool Triple::isLittleEndian() const {
   case Triple::csky:
   case Triple::dxil:
   case Triple::h2blb:
+  case Triple::asahi:
   case Triple::hexagon:
   case Triple::hsail64:
   case Triple::hsail:
