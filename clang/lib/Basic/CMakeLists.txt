@@ -102,6 +102,7 @@ add_clang_library(clangBasic
   Targets/CSKY.cpp
   Targets/DirectX.cpp
   Targets/H2BLB.cpp
+  Targets/ASAHI.cpp
   Targets/Hexagon.cpp
   Targets/Lanai.cpp
   Targets/LoongArch.cpp

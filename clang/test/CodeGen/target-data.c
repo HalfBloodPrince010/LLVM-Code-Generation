@@ -276,3 +276,8 @@
 // RUN: %clang_cc1 -triple h2blb-unknown -o - -emit-llvm %s | \
 // RUN: FileCheck %s -check-prefix=H2BLB
 // H2BLB: target datalayout = "e-p:16:16:16-n16:32-i32:32:32-i16:16:16-i1:8:8-f32:32:32-v32:32:32"
+
+
+// RUN: %clang_cc1 -triple asahi-unknown -o - -emit-llvm %s | \
+// RUN: FileCheck %s -check-prefix=ASAHI
+// ASAHI: target datalayout = "e-p:16:16:16-n16:32-i32:32:32-i16:16:16-i1:8:8-f32:32:32-v32:32:32"

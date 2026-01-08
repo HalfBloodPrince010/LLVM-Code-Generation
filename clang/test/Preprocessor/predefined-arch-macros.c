@@ -4566,3 +4566,8 @@
 // RUN:     --target=h2blb \
 // RUN:   | FileCheck -match-full-lines %s -check-prefix=CHECK_H2BLB
 // CHECK_H2BLB: #define __H2BLB__ 1
+
+// RUN: %clang -E -dM %s -o - 2>&1 \
+// RUN:      --target=asahi \
+// RUN:   | FileCheck -match-full-lines %s -check-prefix=CHECK_ASAHI
+// CHECK_ASAHI: #define __ASAHI__ 1
