@@ -485,6 +485,7 @@ set(LLVM_ALL_TARGETS
   AVR
   BPF
   H2BLB
+  ASAHI
   Hexagon
   Lanai
   LoongArch
