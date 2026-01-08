@@ -4,8 +4,8 @@ add_llvm_target(ASAHICodeGen
     ASAHITargetMachine.cpp
 
     LINK_COMPONENTS
-    ASAHIMCDesc
-    ASAHITargetInfo
+    ASAHIDesc
+    ASAHIInfo
 
     Support
 

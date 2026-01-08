@@ -1,4 +1,4 @@
-add_llvm_component_library(LLVMASAHITargetInfo
+add_llvm_component_library(LLVMASAHIInfo
     ASAHITargetInfo.cpp
 
     LINK_COMPONENTS
