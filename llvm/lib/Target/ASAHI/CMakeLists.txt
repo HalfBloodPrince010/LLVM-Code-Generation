@@ -7,7 +7,10 @@ add_llvm_target(ASAHICodeGen
     ASAHIDesc
     ASAHIInfo
 
+    CodeGen
+    Core
     Support
+    Target
 
     ADD_TO_COMPONENT
     ASAHI

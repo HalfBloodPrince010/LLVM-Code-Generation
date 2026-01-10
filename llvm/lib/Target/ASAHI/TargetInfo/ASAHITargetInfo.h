@@ -1,4 +1,11 @@
 #ifndef LLVM_LIB_TARGET_ASAHI_TARGETINFO_ASAHITARGETINFO_H
 #define LLVM_LIB_TARGET_ASAHI_TARGETINFO_ASAHITARGETINFO_H
 
+namespace llvm {
+
+class Target;
+
+Target &getTheAsahiTarget();
+} // llvm namespace
+
 #endif  //LLVM_LIB_TARGET_ASAHI_TARGETINFO_ASAHITARGETINFO_H
