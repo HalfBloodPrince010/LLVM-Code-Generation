@@ -13,12 +13,16 @@
 #ifndef LLVM_LIB_TARGET_ASAHI_ASAHITARGETMACHINE_H
 #define LLVM_LIB_TARGET_ASAHI_ASAHITARGETMACHINE_H
 
+#include "ASAHISubtarget.h"
 #include "llvm/CodeGen/CodeGenTargetMachineImpl.h"
+#include <memory>
 #include <optional>
 
 namespace llvm {
 
 class ASAHITargetMachine: public CodeGenTargetMachineImpl {
+    mutable std::unique_ptr<ASAHISubtarget> SubtargetSingleton;
+
 public:
     ASAHITargetMachine(const Target &T, const Triple &TT, StringRef CPU, 
                        StringRef FS, const TargetOptions &Options,
@@ -27,6 +31,8 @@ public:
                        bool JIT);
 
     ~ASAHITargetMachine() override;
+
+    const ASAHISubtarget *getSubtargetImpl(const Function &F) const override;
 };
 
 } // namespace llvm

@@ -2,6 +2,7 @@
 #include "llvm/Support/Compiler.h"  // LLVM_EXTERNAL_VISIBILITY
 #include "llvm/MC/TargetRegistry.h"     // For RegisterTargetMachine.
 #include "TargetInfo/ASAHITargetInfo.h"  // For getTheAsahiTarget
+#include <memory>
 
 using namespace llvm;
 
@@ -30,3 +31,39 @@ ASAHITargetMachine::ASAHITargetMachine(const Target &T, const Triple &TT,
     // Needed to decide the addressing modes and other details
 
 ASAHITargetMachine::~ASAHITargetMachine() = default;
+
+
+
+/*
+Target Machine --uses/calls--> Subtarget --uses/calls--> TargetLowering
+
+Ideally, we do the following
+
+IR → SelectionDAG
+LegalizeTypes
+Legalize
+DAG combines
+Instruction selection (match DAG patterns to real instructions)
+
+This is the SelectionDAG pipeline.
+
+This is invoked during -O1 or -O2 optimization?
+*/
+const ASAHISubtarget *
+ASAHITargetMachine::getSubtargetImpl(const Function &F) const {
+    Attribute CPUAttr = F.getFnAttribute("target-cpu");
+    Attribute FSAttr =  F.getFnAttribute("target-features");
+
+    StringRef CPU = CPUAttr.isValid() ? CPUAttr.getValueAsString() : TargetCPU;
+    StringRef FS = FSAttr.isValid() ? FSAttr.getValueAsString() : TargetFS;
+
+    // Eventually, we'll want to hook up a different subtarget based on at the
+    // target feature, target cpu, and tune cpu attached to F, but as of now,
+    // the target doesn't support anything fancy so we just have one subtarget
+    // for everything.
+    if(!SubtargetSingleton){
+        SubtargetSingleton = std::make_unique<ASAHISubtarget>(TargetTriple, CPU, FS, *this);
+    }
+
+    return SubtargetSingleton.get();
+}
