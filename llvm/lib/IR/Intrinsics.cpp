@@ -19,6 +19,7 @@
 #include "llvm/IR/IntrinsicsARM.h"
 #include "llvm/IR/IntrinsicsBPF.h"
 #include "llvm/IR/IntrinsicsH2BLB.h"
+#include "llvm/IR/IntrinsicsASAHI.h"
 #include "llvm/IR/IntrinsicsHexagon.h"
 #include "llvm/IR/IntrinsicsLoongArch.h"
 #include "llvm/IR/IntrinsicsMips.h"
