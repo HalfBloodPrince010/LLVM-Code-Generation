@@ -84,6 +84,10 @@ clang_tablegen(BuiltinsH2BLB.inc -gen-clang-builtins
   SOURCE BuiltinsH2BLB.td
   TARGET ClangBuiltinsH2BLB)
 
+clang_tablegen(BuiltinsASAHI.inc -gen-clang-builtins
+  SOURCE BuiltinsASAHI.td
+  TARGET ClangBuiltinsASAHI)
+
 clang_tablegen(BuiltinsRISCV.inc -gen-clang-builtins
   SOURCE BuiltinsRISCV.td
   TARGET ClangBuiltinsRISCV)

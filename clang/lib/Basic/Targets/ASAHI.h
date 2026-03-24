@@ -88,9 +88,7 @@ public:
   /// across the current set of primary and secondary targets.
   /// Also, useful when we define the intrincs we will define the
   /// __builtins__
-  ArrayRef<Builtin::Info> getTargetBuiltins() const override {
-    return std::nullopt;
-  }
+  ArrayRef<Builtin::Info> getTargetBuiltins() const override;
 
 
   /// Returns the kind of __builtin_va_list type that should be used

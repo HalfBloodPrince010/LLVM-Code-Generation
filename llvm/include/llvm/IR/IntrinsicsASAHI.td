@@ -15,8 +15,15 @@
 // All ASAHI target intrinsics starts with "llvm.asahi."
 
 let TargetPrefix = "asahi" in {
+    /// ASAHI_Intrinsic: Base class for intrinsics exposed through clang
+    /// ClangBuiltin exposes it to Clang
+
+    class ASAHI_Intrinsic<string suffix, list<LLVMType> ret_types,
+                                 list<LLVMType> param_types>
+        : ClangBuiltin<!strconcat("__builtin_asahi_", suffix)>, DefaultAttrsIntrinsic<ret_types, param_types>;
+
     def int_asahi_widening_smul :
-    Intrinsic<[llvm_i32_ty], [llvm_i16_ty, llvm_i16_ty]>;
+    ASAHI_Intrinsic<"widening_smul", [llvm_i32_ty], [llvm_i16_ty, llvm_i16_ty]>;
     def int_asahi_widening_umul :
-    Intrinsic<[llvm_i32_ty], [llvm_i16_ty, llvm_i16_ty]>;
+    ASAHI_Intrinsic<"widening_umul", [llvm_i32_ty], [llvm_i16_ty, llvm_i16_ty]>;
 } // end TargetPrefix = "asahi"

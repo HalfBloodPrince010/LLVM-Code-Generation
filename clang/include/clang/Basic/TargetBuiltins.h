@@ -362,6 +362,36 @@ namespace clang {
   };
   } // namespace H2BLB
 
+  /// ASAHI builtins
+  namespace ASAHI {
+  enum {
+    // Markers, FirstTSBuiltin is the first target specific builtin.
+    LastTIBuiltin = clang::Builtin::FirstTSBuiltin - 1,
+
+  /*
+  This marco just produces builtin enums by expanding BI##ID
+  BuiltingASAHI.td produces BuiltingASAHI.inc which is basic a table of
+  enties like
+
+  BUILTIN(....)
+  BUILTIN(....)
+  TARGET_BUILTIN(....)
+  LIBRAY_BUILITIN(....)
+  .
+  .
+  All of them will get expanded to "BI__ID"
+
+  If ID = __builtin_asahi_widening_smul
+  Then this produces enum like
+  "BI__builtin_asahi_widening_smul"
+  */
+#define BUILTIN(ID, TYPE, ATTRS) BI##ID,
+#include "clang/Basic/BuiltinsASAHI.inc"
+    LastTSBuiltin
+};
+} // namespace ASAHI
+
+
   /// Hexagon builtins
   namespace Hexagon {
   enum {
