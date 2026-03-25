@@ -47,6 +47,8 @@ public:
                                VectorType *VecTy) const;
 
   ///@}
+
+  InstructionCost getIntrinsicInstrCost(const IntrinsicCostAttributes &ICA, TTI::TargetCostKind CostKind);
 };
 } // end namespace llvm
 

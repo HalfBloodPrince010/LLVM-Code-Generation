@@ -33,3 +33,16 @@ unsigned ASAHITTIImpl::getLoadVectorFactor(unsigned VF, unsigned LoadSize,
 
   return std::min(VF, 2u);
 };
+
+InstructionCost ASAHITTIImpl::getIntrinsicInstrCost(const IntrinsicCostAttributes &ICA, TTI::TargetCostKind CostKind) {
+    // the signed extension / handling needed for widening_smul is modeled as more expensive 
+    // than the unsigned case or a regular instruction
+    // For code size, though, this is the same.
+    // For Latency (num of instruction cycles) its more.
+    if(CostKind != TargetTransformInfo::TCK_CodeSize &&
+      ICA.getID() == Intrinsic::asahi_widening_smul) {
+        return TargetTransformInfo::TCC_Expensive;
+    }
+
+    return BaseT::getIntrinsicInstrCost(ICA, CostKind);
+}
