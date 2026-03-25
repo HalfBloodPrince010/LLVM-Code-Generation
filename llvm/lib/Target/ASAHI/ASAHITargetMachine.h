@@ -33,6 +33,7 @@ public:
     ~ASAHITargetMachine() override;
 
     const ASAHISubtarget *getSubtargetImpl(const Function &F) const override;
+    TargetTransformInfo getTargetTransformInfo(const Function &F) const override;
 };
 
 } // namespace llvm

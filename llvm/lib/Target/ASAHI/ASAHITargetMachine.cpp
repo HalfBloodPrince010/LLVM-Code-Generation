@@ -1,4 +1,5 @@
 #include "ASAHITargetMachine.h"
+#include "ASAHITargetTransformInfo.h"
 #include "llvm/Support/Compiler.h"  // LLVM_EXTERNAL_VISIBILITY
 #include "llvm/MC/TargetRegistry.h"     // For RegisterTargetMachine.
 #include "TargetInfo/ASAHITargetInfo.h"  // For getTheAsahiTarget
@@ -66,4 +67,9 @@ ASAHITargetMachine::getSubtargetImpl(const Function &F) const {
     }
 
     return SubtargetSingleton.get();
+}
+
+TargetTransformInfo
+ASAHITargetMachine::getTargetTransformInfo(const Function &F) const {
+    return TargetTransformInfo(ASAHITTIImpl(this, F));
 }
