@@ -1,4 +1,5 @@
 #include "ASAHI.h"
+#include "ASAHITargetObjectFile.h"
 #include "ASAHITargetMachine.h"
 #include "ASAHITargetTransformInfo.h"
 #include "llvm/Support/Compiler.h"  // LLVM_EXTERNAL_VISIBILITY
@@ -8,6 +9,17 @@
 #include <memory>
 
 using namespace llvm;
+
+static std::unique_ptr<TargetLoweringObjectFile> createTLOF(const Triple &TT) {
+    if(TT.isOSBinFormatELF()) {
+        return std::make_unique<ASAHI_ELFTargetObjectFile>();
+    } else if (TT.isOSBinFormatMachO()) {
+        return std::make_unique<ASAHI_MachoTargetObjectFile>();
+    }
+
+    // Other format not supported yet.
+    return nullptr;
+}
 
 static const char *ASAHIDataLayoutStr =
     "e-p:16:16:16-n16:32-i32:32:32-i16:16:16-i1:8:8-f32:32:32-v32:32:32";
@@ -32,7 +44,8 @@ ASAHITargetMachine::ASAHITargetMachine(const Target &T, const Triple &TT,
     : CodeGenTargetMachineImpl(T, ASAHIDataLayoutStr, TT, CPU, FS, Options,
                                // Use the simplest relocation by default
                                RM ? *RM: Reloc::Static,
-                               CM ? *CM: CodeModel::Small, OL) {
+                               CM ? *CM: CodeModel::Small, OL,
+                               TLOF(createTLOF(getTargetTriple())) {
         initAsmInfo();
     }
     // CodeModel::Small means the target object file is small and can be fit under 2GB

@@ -14,6 +14,7 @@
 #define LLVM_LIB_TARGET_ASAHI_ASAHITARGETMACHINE_H
 
 #include "ASAHISubtarget.h"
+#include "llvm/Target/TargetLoweringObjectFile.h"
 #include "llvm/CodeGen/CodeGenTargetMachineImpl.h"
 #include <memory>
 #include <optional>
@@ -22,6 +23,7 @@ namespace llvm {
 
 class ASAHITargetMachine: public CodeGenTargetMachineImpl {
     mutable std::unique_ptr<ASAHISubtarget> SubtargetSingleton;
+    std::unique_ptr<TargetLoweringObjectFile> TLOF;
 
 public:
     ASAHITargetMachine(const Target &T, const Triple &TT, StringRef CPU, 
@@ -34,6 +36,10 @@ public:
 
     const ASAHISubtarget *getSubtargetImpl(const Function &F) const override;
     TargetTransformInfo getTargetTransformInfo(const Function &F) const override;
+
+    TargetLoweringObjectFile *getObjFileLowering() const override {
+        return TLOF.get();
+    }
 
     // Register the target specific passes that this backend offers.
     void registerPassBuilderCallbacks(PassBuilder &PB) override;
