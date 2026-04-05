@@ -1,5 +1,11 @@
 add_llvm_component_group(ASAHI)
 
+set (LLVM_TARGET_DEFINITIONS ASAHI.td)
+
+tablegen(LLVM ASAHIGenSubtargetInfo.inc -gen-subtarget)
+
+add_public_tablegen_target(ASAHICommonTableGen)
+
 add_llvm_target(ASAHICodeGen
     ASAHIISelLowering.cpp
     ASAHISimpleConstantPropagation.cpp

@@ -4,6 +4,8 @@ add_llvm_component_library(LLVMASAHIDesc
 
     LINK_COMPONENTS
     Support
+    ASAHIInfo
+    MC
 
     ADD_TO_COMPONENT
     ASAHI
