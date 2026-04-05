@@ -1,12 +1,13 @@
-
 #include "ASAHIMCTargetDesc.h"
+#include "ASAHIMCAsmInfo.h"
 #include "TargetInfo/ASAHITargetInfo.h" // getTheASAHITarget
-#include "llvm/Support/Compiler.h" // For LLVM_EXTERNAL_VISIBILITY.
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
 #include "llvm/MC/TargetRegistry.h"
 #include "llvm/TargetParser/Triple.h"
+#include "llvm/Support/Compiler.h" // For LLVM_EXTERNAL_VISIBILITY.
+#include "llvm/Support/ErrorHandling.h"
 
 using namespace llvm;
 
@@ -30,8 +31,26 @@ static MCInstrInfo *createASAHIMCInstrInfo() {
   return X;
 }
 
+static MCAsmInfo *createASAHIMCAsmInfo(const MCRegisterInfo &MRI,
+                                       const Triple &TheTriple,
+                                       const MCTargetOptions &Options) {
+    MCAsmInfo *MAI;
+    if (TheTriple.isOSBinFormatELF()) {
+        MAI = new ASAHIMCAsmInfoELF(TheTriple, Options);
+    } else if (TheTriple.isOSBinFormatMachO()) {
+        MAI = new ASAHIMCAsmInfoDarwin(TheTriple, Options);
+    } else {
+        report_fatal_error("Binary format not supported");
+    }
+
+    return MAI;
+}
+
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeASAHITargetMC() {
     Target &TheTarget = getTheASAHITarget();
+
+    // Register the MC asm info.
+    RegisterMCAsmInfoFn X(TheTarget, createASAHIMCAsmInfo);
 
     // Register the MC register info.
     TargetRegistry::RegisterMCRegInfo(TheTarget, createASAHIMCRegisterInfo);

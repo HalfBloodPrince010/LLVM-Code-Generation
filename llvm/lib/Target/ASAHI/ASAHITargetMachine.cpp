@@ -32,7 +32,9 @@ ASAHITargetMachine::ASAHITargetMachine(const Target &T, const Triple &TT,
     : CodeGenTargetMachineImpl(T, ASAHIDataLayoutStr, TT, CPU, FS, Options,
                                // Use the simplest relocation by default
                                RM ? *RM: Reloc::Static,
-                               CM ? *CM: CodeModel::Small, OL) {}
+                               CM ? *CM: CodeModel::Small, OL) {
+        initAsmInfo();
+    }
     // CodeModel::Small means the target object file is small and can be fit under 2GB
     // Needed to decide the addressing modes and other details
 
