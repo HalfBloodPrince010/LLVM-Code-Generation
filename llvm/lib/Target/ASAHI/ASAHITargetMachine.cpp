@@ -18,6 +18,9 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeASAHITarget() {
     // to register TargetMachine as well, but in the TargetMachineRegistry
     RegisterTargetMachine<ASAHITargetMachine> X(getTheAsahiTarget());
 
+    PassRegistry &PR = *PassRegistry::getPassRegistry();
+    initializeASAHISimpleConstantPropagationPass(PR);
+
 }
 
 ASAHITargetMachine::ASAHITargetMachine(const Target &T, const Triple &TT,
