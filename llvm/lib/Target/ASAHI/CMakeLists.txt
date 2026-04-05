@@ -2,9 +2,10 @@ add_llvm_component_group(ASAHI)
 
 add_llvm_target(ASAHICodeGen
     ASAHIISelLowering.cpp
+    ASAHISimpleConstantPropagation.cpp
+    ASAHISubtarget.cpp
     ASAHITargetMachine.cpp
     ASAHITargetTransformInfo.cpp
-    ASAHISubtarget.cpp
 
     LINK_COMPONENTS
     ASAHIDesc

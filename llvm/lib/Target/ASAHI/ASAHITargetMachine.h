@@ -34,6 +34,9 @@ public:
 
     const ASAHISubtarget *getSubtargetImpl(const Function &F) const override;
     TargetTransformInfo getTargetTransformInfo(const Function &F) const override;
+
+    // Register the target specific passes that this backend offers.
+    void registerPassBuilderCallbacks(PassBuilder &PB) override;
 };
 
 } // namespace llvm

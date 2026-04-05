@@ -2,6 +2,7 @@
 #include "ASAHITargetTransformInfo.h"
 #include "llvm/Support/Compiler.h"  // LLVM_EXTERNAL_VISIBILITY
 #include "llvm/MC/TargetRegistry.h"     // For RegisterTargetMachine.
+#include "llvm/Passes/PassBuilder.h"
 #include "TargetInfo/ASAHITargetInfo.h"  // For getTheAsahiTarget
 #include <memory>
 
@@ -72,4 +73,9 @@ ASAHITargetMachine::getSubtargetImpl(const Function &F) const {
 TargetTransformInfo
 ASAHITargetMachine::getTargetTransformInfo(const Function &F) const {
     return TargetTransformInfo(ASAHITTIImpl(this, F));
+}
+
+void ASAHITargetMachine::registerPassBuilderCallbacks(PassBuilder &PB) {
+#define GET_PASS_REGISTRY "ASAHIPassRegistry.def"
+#include "llvm/Passes/TargetPassRegistry.inc"
 }
