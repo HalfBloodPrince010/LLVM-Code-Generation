@@ -1,3 +1,4 @@
+#include "ASAHI.h"
 #include "ASAHITargetMachine.h"
 #include "ASAHITargetTransformInfo.h"
 #include "llvm/Support/Compiler.h"  // LLVM_EXTERNAL_VISIBILITY
@@ -75,7 +76,24 @@ ASAHITargetMachine::getTargetTransformInfo(const Function &F) const {
     return TargetTransformInfo(ASAHITTIImpl(this, F));
 }
 
+// Helps with the registration of --- opt -passes="asahi-simple-cst-prop"
+// “If someone asks for a pass named asahi-simple-cst-prop, construct ASAHISimpleConstantPropagationNewPass().”
+// That is registration / discoverability.
 void ASAHITargetMachine::registerPassBuilderCallbacks(PassBuilder &PB) {
 #define GET_PASS_REGISTRY "ASAHIPassRegistry.def"
 #include "llvm/Passes/TargetPassRegistry.inc"
+
+  // Contrary to the above, this says
+  // Whenever LLVM builds the default optimization pipeline, automatically include this pass.
+  PB.registerPipelineStartEPCallback(
+    [](ModulePassManager &MPM, OptimizationLevel optLevel) {
+        // Do not add optimization passes if we are in O0.
+        if(optLevel == OptimizationLevel::O0) {
+            return;
+        }
+
+        FunctionPassManager FPM;
+        FPM.addPass(ASAHISimpleConstantPropagationNewPass());
+        MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
+    });
 }

@@ -34,7 +34,7 @@ public:
 // This is to setup the metadata in th pass registry, to show this pass exists. Doesn't run the pass
 void initializeASAHISimpleConstantPropagationPass(PassRegistry  &);
 // Used by PM.addPass(createASAHISimpleConstantPropagationPassForLegacyPM) .. to actually run the pass
-Pass *llvm::createASAHISimpleConstantPropagationPassForLegacyPM();
+Pass *createASAHISimpleConstantPropagationPassForLegacyPM();
 }
 
 #endif // LLVM_LIB_TARGET_ASAHI_ASAHI_H

@@ -15,6 +15,7 @@ add_llvm_target(ASAHICodeGen
     CodeGen
     Core
     MC
+    Passes
     SelectionDAG
     Support
     Target

@@ -182,7 +182,7 @@ public:
     ASAHISimpleConstantPropagation() : FunctionPass(ID) {
       initializeASAHISimpleConstantPropagationPass(
         *PassRegistry::getPassRegistry()
-      )
+      );
     }
 
     // Main function of a FunctionPass.
@@ -233,6 +233,6 @@ INITIALIZE_PASS(/*passImplementationName=*/ASAHISimpleConstantPropagation,
                 /*isCFGOnly=*/false,
                 /*isAnalysis=*/false)
 
-Pass *createASAHISimpleConstantPropagationPassForLegacyPM() {
+Pass *llvm::createASAHISimpleConstantPropagationPassForLegacyPM() {
   return new ASAHISimpleConstantPropagation();
 }
