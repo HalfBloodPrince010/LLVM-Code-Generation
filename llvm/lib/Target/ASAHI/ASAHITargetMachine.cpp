@@ -45,8 +45,8 @@ ASAHITargetMachine::ASAHITargetMachine(const Target &T, const Triple &TT,
     : CodeGenTargetMachineImpl(T, ASAHIDataLayoutStr, TT, CPU, FS, Options,
                                // Use the simplest relocation by default
                                RM ? *RM: Reloc::Static,
-                               CM ? *CM: CodeModel::Small, OL,
-                               TLOF(createTLOF(getTargetTriple())) {
+                               CM ? *CM: CodeModel::Small, OL),
+      TLOF(createTLOF(getTargetTriple())) {
         initAsmInfo();
     }
     // CodeModel::Small means the target object file is small and can be fit under 2GB
@@ -121,7 +121,9 @@ TargetPassConfig* ASAHITargetMachine::createPassConfig(PassManagerBase &PM) {
     return new ASAHIPassConfig(*this, PM);
 }
 
-ASAHIPassConfig::ASAHIPassConfig(TargetMachine &TM, PassManagerBase &PM) : TargetPassConfig(TM, PM) {}
+ASAHIPassConfig::ASAHIPassConfig(TargetMachine &TM, PassManagerBase &PM) : TargetPassConfig(TM, PM) {
+
+}
 
 bool ASAHIPassConfig::addInstSelector() {
     // TODO: We need to hook up the DAG selector here.

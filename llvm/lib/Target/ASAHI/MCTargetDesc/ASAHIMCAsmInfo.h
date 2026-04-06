@@ -23,12 +23,12 @@ class Triple;
 class ASAHIMCAsmInfoELF : public MCAsmInfoELF {
 public:
     explicit ASAHIMCAsmInfoELF(const Triple &TT, const MCTargetOptions &Options);
-}
+};
 
 class ASAHIMCAsmInfoDarwin : public MCAsmInfoDarwin {
 public:
     explicit ASAHIMCAsmInfoDarwin(const Triple &TT, const MCTargetOptions &Options);
-}
+};
 
 } // namespace LLVM
 

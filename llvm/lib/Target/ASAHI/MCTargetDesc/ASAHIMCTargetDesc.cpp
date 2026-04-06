@@ -1,6 +1,6 @@
 #include "ASAHIMCTargetDesc.h"
 #include "ASAHIMCAsmInfo.h"
-#include "TargetInfo/ASAHITargetInfo.h" // getTheASAHITarget
+#include "TargetInfo/ASAHITargetInfo.h" // getTheAsahiTarget
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
@@ -47,7 +47,7 @@ static MCAsmInfo *createASAHIMCAsmInfo(const MCRegisterInfo &MRI,
 }
 
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeASAHITargetMC() {
-    Target &TheTarget = getTheASAHITarget();
+    Target &TheTarget = getTheAsahiTarget();
 
     // Register the MC asm info.
     RegisterMCAsmInfoFn X(TheTarget, createASAHIMCAsmInfo);

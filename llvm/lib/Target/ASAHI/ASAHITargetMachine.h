@@ -45,14 +45,13 @@ public:
     // Register the target specific passes that this backend offers.
     void registerPassBuilderCallbacks(PassBuilder &PB) override;
     TargetPassConfig* createPassConfig(PassManagerBase &PM) override;
-
+};
 
 class ASAHIPassConfig : public TargetPassConfig {
 public:
     ASAHIPassConfig(TargetMachine &TM, PassManagerBase &PM);
 
     bool addInstSelector() override;
-}
 };
 
 } // namespace llvm

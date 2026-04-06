@@ -18,13 +18,13 @@ namespace llvm {
 class ASAHI_ELFTargetObjectFile : public TargetLoweringObjectFileELF {
 public:
     ASAHI_ELFTargetObjectFile();
-}
+};
 
 /// This implementation is used for ASAHI Darwin targets.
 class ASAHI_MachoTargetObjectFile : public TargetLoweringObjectFileMachO {
 public:
     ASAHI_MachoTargetObjectFile();
-}
+};
 
 } // llvm namespace
 
