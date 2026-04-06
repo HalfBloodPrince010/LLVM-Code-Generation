@@ -122,3 +122,8 @@ TargetPassConfig* ASAHITargetMachine::createPassConfig(PassManagerBase &PM) {
 }
 
 ASAHIPassConfig::ASAHIPassConfig(TargetMachine &TM, PassManagerBase &PM) : TargetPassConfig(TM, PM) {}
+
+bool ASAHIPassConfig::addInstSelector() {
+    // TODO: We need to hook up the DAG selector here.
+    return false;
+}

@@ -50,6 +50,8 @@ public:
 class ASAHIPassConfig : public TargetPassConfig {
 public:
     ASAHIPassConfig(TargetMachine &TM, PassManagerBase &PM);
+
+    bool addInstSelector() override;
 }
 };
 
