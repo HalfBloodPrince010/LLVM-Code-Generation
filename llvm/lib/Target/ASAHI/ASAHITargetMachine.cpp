@@ -3,6 +3,7 @@
 #include "ASAHITargetMachine.h"
 #include "ASAHITargetTransformInfo.h"
 #include "llvm/Support/Compiler.h"  // LLVM_EXTERNAL_VISIBILITY
+#include "llvm/CodeGen/TargetPassConfig.h"
 #include "llvm/MC/TargetRegistry.h"     // For RegisterTargetMachine.
 #include "llvm/Passes/PassBuilder.h"
 #include "TargetInfo/ASAHITargetInfo.h"  // For getTheAsahiTarget
@@ -115,3 +116,9 @@ void ASAHITargetMachine::registerPassBuilderCallbacks(PassBuilder &PB) {
         MPM.addPass(createModuleToFunctionPassAdaptor(std::move(FPM)));
     });
 }
+
+TargetPassConfig* ASAHITargetMachine::createPassConfig(PassManagerBase &PM) {
+    return new ASAHIPassConfig(*this, PM);
+}
+
+ASAHIPassConfig::ASAHIPassConfig(TargetMachine &TM, PassManagerBase &PM) : TargetPassConfig(TM, PM) {}
