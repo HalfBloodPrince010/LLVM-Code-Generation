@@ -3,6 +3,7 @@ add_llvm_component_group(ASAHI)
 set (LLVM_TARGET_DEFINITIONS ASAHI.td)
 
 tablegen(LLVM ASAHIGenSubtargetInfo.inc -gen-subtarget)
+tablegen(LLVM ASAHIGenRegisterInfo.inc -gen-register-info)
 
 add_public_tablegen_target(ASAHICommonTableGen)
 
