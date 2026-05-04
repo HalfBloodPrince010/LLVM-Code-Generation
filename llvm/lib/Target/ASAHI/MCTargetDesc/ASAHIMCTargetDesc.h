@@ -14,6 +14,13 @@
 #ifndef LLVM_LIB_TARGET_ASAHI_MCTARGETDESC_ASAHIMCTARGETDESC_H
 #define LLVM_LIB_TARGET_ASAHI_MCTARGETDESC_ASAHIMCTARGETDESC_H
 
+#include <cstdint> // For int16_t and so on used in the .inc files.
+
+// Defines symbolic names for ASAHI registers.  This defines a mapping from
+// register name to register number.
+#define GET_REGINFO_ENUM
+#include "ASAHIGenRegisterInfo.inc"
+
 #define GET_SUBTARGETINFO_ENUM
 #include "ASAHIGenSubtargetInfo.inc"
 

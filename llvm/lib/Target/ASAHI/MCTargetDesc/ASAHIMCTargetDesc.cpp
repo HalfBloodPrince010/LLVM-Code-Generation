@@ -14,6 +14,10 @@ using namespace llvm;
 #define GET_SUBTARGETINFO_MC_DESC
 #include "ASAHIGenSubtargetInfo.inc"
 
+// Enable the MC-layer register-info implementation
+#define GET_REGINFO_MC_DESC
+#include "ASAHIGenRegisterInfo.inc"
+
 static MCSubtargetInfo *
 createASAHIMCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
     return createASAHIMCSubtargetInfoImpl(TT, CPU, /*TuneCPU*/ CPU, FS);
@@ -21,7 +25,9 @@ createASAHIMCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
 
 static MCRegisterInfo *createASAHIMCRegisterInfo(const Triple &Triple) {
   MCRegisterInfo *X = new MCRegisterInfo();
-  // TODO: Fill out the register info.
+  // Initialize all ASAHI register info,
+  // and mark R7 as the return-address register.
+  InitASAHIMCRegisterInfo(X, ASAHI::R7)
   return X;
 }
 
