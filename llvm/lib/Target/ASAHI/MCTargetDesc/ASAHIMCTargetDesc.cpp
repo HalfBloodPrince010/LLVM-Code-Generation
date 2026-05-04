@@ -1,3 +1,16 @@
+//===-- ASAHIMCTargetDesc.cpp - ASAHI Target Descriptions -----------------===//
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
+//
+// This file provides ASAHI specific target descriptions.
+//
+//===----------------------------------------------------------------------===//
+
+#include "ASAHIInstPrinter.h"
 #include "ASAHIMCTargetDesc.h"
 #include "ASAHIMCAsmInfo.h"
 #include "TargetInfo/ASAHITargetInfo.h" // getTheAsahiTarget
@@ -56,6 +69,18 @@ static MCAsmInfo *createASAHIMCAsmInfo(const MCRegisterInfo &MRI,
     return MAI;
 }
 
+static MCInstPrinter *createASAHIMCInstPrinter(const Triple &T,
+                                               unsigned SyntaxVariant,
+                                               const MCAsmInfo &MAI,
+                                               const MCInstrInfo &MII,
+                                               const MCRegisterInfo &MRI) {
+    if(SyntaxVariant == 0) {
+        return new ASAHIInstPrinter(MAI, MII, MRI);
+    }
+
+    return nullptr;
+}
+
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeASAHITargetMC() {
     Target &TheTarget = getTheAsahiTarget();
 
@@ -70,4 +95,7 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeASAHITargetMC() {
 
     // Register the MC subtarget info.
     TargetRegistry::RegisterMCSubtargetInfo(TheTarget, createASAHIMCSubtargetInfo);
+
+    // Register the MCInst to asm printer.
+    TargetRegistry::RegisterMCInstPrinter(TheTarget, createASAHIMCInstPrinter);
 }

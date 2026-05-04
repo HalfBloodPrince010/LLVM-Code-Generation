@@ -2,6 +2,7 @@
 add_llvm_component_library(LLVMASAHIDesc
     ASAHIMCAsmInfo.cpp
     ASAHIMCTargetDesc.cpp
+    ASAHIInstPrinter.cpp
 
     LINK_COMPONENTS
     Support
