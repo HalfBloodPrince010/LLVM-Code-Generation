@@ -24,4 +24,8 @@
 #define GET_SUBTARGETINFO_ENUM
 #include "ASAHIGenSubtargetInfo.inc"
 
+#define GET_INSTRINFO_ENUM
+#define GET_INSTRINFO_MC_HELPER_DECLS
+#include "ASAHIGenInstrInfo.inc"
+
 #endif

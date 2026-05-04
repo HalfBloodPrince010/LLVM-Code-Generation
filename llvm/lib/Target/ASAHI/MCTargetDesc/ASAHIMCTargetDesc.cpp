@@ -18,6 +18,10 @@ using namespace llvm;
 #define GET_REGINFO_MC_DESC
 #include "ASAHIGenRegisterInfo.inc"
 
+#define GET_INSTRINFO_MC_DESC
+#define GET_INSTRINFO_MC_HELPERS
+#include "ASAHIGenInstrInfo.inc"
+
 static MCSubtargetInfo *
 createASAHIMCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
     return createASAHIMCSubtargetInfoImpl(TT, CPU, /*TuneCPU*/ CPU, FS);
@@ -33,7 +37,7 @@ static MCRegisterInfo *createASAHIMCRegisterInfo(const Triple &Triple) {
 
 static MCInstrInfo *createASAHIMCInstrInfo() {
   MCInstrInfo *X = new MCInstrInfo();
-  // TODO: Fill out the instr info.
+  InitASAHIMCInstrInfo(X);
   return X;
 }
 

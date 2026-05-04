@@ -4,6 +4,7 @@ set (LLVM_TARGET_DEFINITIONS ASAHI.td)
 
 tablegen(LLVM ASAHIGenSubtargetInfo.inc -gen-subtarget)
 tablegen(LLVM ASAHIGenRegisterInfo.inc -gen-register-info)
+tablegen(LLVM ASAHIGenInstrInfo.inc -gen-instr-info)
 
 add_public_tablegen_target(ASAHICommonTableGen)
 
