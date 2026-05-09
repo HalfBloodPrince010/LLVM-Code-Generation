@@ -1,6 +1,7 @@
 # Note even though we name it LLVMASAHIMCDesc, it is referenced as ASAHIMCDesc in LINK_COMPONENTS
 add_llvm_component_library(LLVMASAHIDesc
     ASAHIMCAsmInfo.cpp
+    ASAHIMCCodeEmitter.cpp
     ASAHIMCTargetDesc.cpp
     ASAHIInstPrinter.cpp
 

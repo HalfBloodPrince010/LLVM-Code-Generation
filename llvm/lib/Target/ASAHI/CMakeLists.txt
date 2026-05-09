@@ -9,6 +9,8 @@ tablegen(LLVM ASAHIGenInstrInfo.inc -gen-instr-info)
 tablegen(LLVM ASAHIGenAsmWriter.inc -gen-asm-writer)
 # .s to MCInst
 tablegen(LLVM ASAHIGenAsmMatcher.inc -gen-asm-matcher)
+# Encoding.
+tablegen(LLVM ASAHIGenMCCodeEmitter.inc -gen-emitter)
 
 add_public_tablegen_target(ASAHICommonTableGen)
 
