@@ -7,6 +7,8 @@ tablegen(LLVM ASAHIGenRegisterInfo.inc -gen-register-info)
 tablegen(LLVM ASAHIGenInstrInfo.inc -gen-instr-info)
 # MCInst to .s
 tablegen(LLVM ASAHIGenAsmWriter.inc -gen-asm-writer)
+# .s to MCInst
+tablegen(LLVM ASAHIGenAsmMatcher.inc -gen-asm-matcher)
 
 add_public_tablegen_target(ASAHICommonTableGen)
 
@@ -37,5 +39,6 @@ add_llvm_target(ASAHICodeGen
     ASAHI
 )
 
+add_subdirectory(AsmParser)
 add_subdirectory(MCTargetDesc)
 add_subdirectory(TargetInfo)
