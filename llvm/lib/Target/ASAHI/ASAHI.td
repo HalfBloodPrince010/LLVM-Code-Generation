@@ -21,9 +21,9 @@ def : ProcessorModel<"generic", NoSchedModel, /*Features=*/[]>;
 
 def ASAHIInstrInfo : InstrInfo;
 
-def ASAHIAsmParser: AsmParser;
+def ASAHIAsmParser : AsmParser;
 
 def ASAHI : Target {
     let InstructionSet = ASAHIInstrInfo;
-    let AssemblyParsers = [ASAHIAsmParser]
+    let AssemblyParsers = [ASAHIAsmParser];
 }

@@ -27,7 +27,7 @@ private:
     void printRegName(raw_ostream &OS, MCRegister Reg) override;
 
 public:
-    ASAHIInstPrinter(const MCAsmInfo &MAI, const MCInstInfo &MII, const MCRegisterInfo &MRI);
+    ASAHIInstPrinter(const MCAsmInfo &MAI, const MCInstrInfo &MII, const MCRegisterInfo &MRI);
 
     void printInst(const MCInst *MI, uint64_t Address, StringRef Annot,
                  const MCSubtargetInfo &STI, raw_ostream &O) override;

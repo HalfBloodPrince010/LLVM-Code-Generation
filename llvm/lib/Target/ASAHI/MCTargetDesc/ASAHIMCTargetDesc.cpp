@@ -44,7 +44,7 @@ static MCRegisterInfo *createASAHIMCRegisterInfo(const Triple &Triple) {
   MCRegisterInfo *X = new MCRegisterInfo();
   // Initialize all ASAHI register info,
   // and mark R7 as the return-address register.
-  InitASAHIMCRegisterInfo(X, ASAHI::R7)
+  InitASAHIMCRegisterInfo(X, ASAHI::R7);
   return X;
 }
 

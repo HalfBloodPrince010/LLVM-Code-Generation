@@ -27,8 +27,8 @@ class ASAHIReg<bits<16> enc, string name, list<Register> subregs = []>: Register
 }
 
 // Subreg definitions
-def sub_low16 = SubRegIndex<16>;
-def sub_high16 = SubRegIndex<16, 16>;
+def sub_low16 : SubRegIndex<16>;
+def sub_high16 : SubRegIndex<16, 16>;
 
 // Register definitions.
 def R0 : ASAHIReg<0, "r0">;
