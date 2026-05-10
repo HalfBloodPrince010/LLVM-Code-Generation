@@ -19,6 +19,7 @@ add_llvm_target(ASAHICodeGen
     ASAHISimpleConstantPropagation.cpp
     ASAHISubtarget.cpp
     ASAHIInstrInfo.cpp
+    ASAHIFrameLowering.cpp
     ASAHITargetMachine.cpp
     ASAHITargetObjectFile.cpp
     ASAHITargetTransformInfo.cpp
