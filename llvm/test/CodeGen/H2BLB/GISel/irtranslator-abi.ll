@@ -341,7 +341,7 @@ define i32 @structInputArg(%struct.nested %struct) {
   ; CHECK-NEXT:   [[FRAME_INDEX:%[0-9]+]]:_(p0) = G_FRAME_INDEX %fixed-stack.1
   ; CHECK-NEXT:   [[LOAD:%[0-9]+]]:_(s32) = G_LOAD [[FRAME_INDEX]](p0) :: (invariant load (s32) from %fixed-stack.1, align 8)
   ; CHECK-NEXT:   [[FRAME_INDEX1:%[0-9]+]]:_(p0) = G_FRAME_INDEX %fixed-stack.0
-  ; CHECK-NEXT:   [[LOAD1:%[0-9]+]]:_(s32) = G_LOAD [[FRAME_INDEX1]](p0) :: (invariant load (s32) from %fixed-stack.0, align 2)
+  ; CHECK-NEXT:   [[LOAD1:%[0-9]+]]:_(s32) = G_LOAD [[FRAME_INDEX1]](p0) :: (invariant load (s32) from %fixed-stack.0)
   ; CHECK-NEXT:   $d1 = COPY [[LOAD]](s32)
   ; CHECK-NEXT:   RET_PSEUDO implicit $d1
   %res = extractvalue %struct.nested %struct, 1, 1
@@ -362,20 +362,20 @@ define i32 @structOutArg() {
   ; CHECK-NEXT:   [[C2:%[0-9]+]]:_(s16) = G_CONSTANT i16 12
   ; CHECK-NEXT:   [[PTR_ADD2:%[0-9]+]]:_(p0) = G_PTR_ADD [[FRAME_INDEX]], [[C2]](s16)
   ; CHECK-NEXT:   [[LOAD3:%[0-9]+]]:_(s32) = G_LOAD [[PTR_ADD2]](p0) :: (dereferenceable load (s32) from %ir.addr_input + 12)
-  ; CHECK-NEXT:   ADJCALLSTACKDOWN 4, 0, implicit-def $sp, implicit $sp
+  ; CHECK-NEXT:   ADJCALLSTACKDOWN 8, 0, implicit-def $sp, implicit $sp
   ; CHECK-NEXT:   [[ANYEXT:%[0-9]+]]:_(s16) = G_ANYEXT [[LOAD]](s8)
   ; CHECK-NEXT:   [[ANYEXT1:%[0-9]+]]:_(s16) = G_ANYEXT [[LOAD1]](s8)
   ; CHECK-NEXT:   [[COPY:%[0-9]+]]:_(p0) = COPY $sp
   ; CHECK-NEXT:   [[C3:%[0-9]+]]:_(s16) = G_CONSTANT i16 0
   ; CHECK-NEXT:   [[PTR_ADD3:%[0-9]+]]:_(p0) = G_PTR_ADD [[COPY]], [[C3]](s16)
   ; CHECK-NEXT:   G_STORE [[LOAD2]](s32), [[PTR_ADD3]](p0) :: (store (s32) into stack, align 1)
-  ; CHECK-NEXT:   [[C4:%[0-9]+]]:_(s16) = G_CONSTANT i16 2
+  ; CHECK-NEXT:   [[C4:%[0-9]+]]:_(s16) = G_CONSTANT i16 4
   ; CHECK-NEXT:   [[PTR_ADD4:%[0-9]+]]:_(p0) = G_PTR_ADD [[COPY]], [[C4]](s16)
-  ; CHECK-NEXT:   G_STORE [[LOAD3]](s32), [[PTR_ADD4]](p0) :: (store (s32) into stack + 2, align 1)
+  ; CHECK-NEXT:   G_STORE [[LOAD3]](s32), [[PTR_ADD4]](p0) :: (store (s32) into stack + 4, align 1)
   ; CHECK-NEXT:   $r1 = COPY [[ANYEXT]](s16)
   ; CHECK-NEXT:   $r2 = COPY [[ANYEXT1]](s16)
   ; CHECK-NEXT:   CALL @structInputArg, csr, implicit-def $r0, implicit $sp, implicit $r1, implicit $r2, implicit-def $d1
-  ; CHECK-NEXT:   ADJCALLSTACKUP 4, 0, implicit-def $sp, implicit $sp
+  ; CHECK-NEXT:   ADJCALLSTACKUP 8, 0, implicit-def $sp, implicit $sp
   ; CHECK-NEXT:   [[COPY1:%[0-9]+]]:_(s32) = COPY $d1
   ; CHECK-NEXT:   $d1 = COPY [[COPY1]](s32)
   ; CHECK-NEXT:   RET_PSEUDO implicit $d1

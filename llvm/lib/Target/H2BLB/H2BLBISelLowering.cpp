@@ -306,8 +306,6 @@ SDValue H2BLBTargetLowering::LowerCall(TargetLowering::CallLoweringInfo &CLI,
     SDValue DstAddr;
     MachinePointerInfo DstInfo;
 
-    unsigned OpSize = VA.getValVT().getSizeInBits();
-    OpSize = (OpSize + 7) / 8;
     unsigned LocMemOffset = VA.getLocMemOffset();
     SDValue PtrOff = DAG.getIntPtrConstant(LocMemOffset, DL);
     DstAddr = DAG.getNode(ISD::ADD, DL, PtrVT, StackPtr, PtrOff);

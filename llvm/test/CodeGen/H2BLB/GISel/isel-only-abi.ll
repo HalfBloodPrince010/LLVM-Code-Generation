@@ -323,13 +323,13 @@ define i32 @structOutArg() {
   ; CHECK-NEXT:   [[LDRZEXTSP8_1:%[0-9]+]]:gpr16 = LDRZEXTSP8 %stack.0.addr_input, 4 :: (dereferenceable load (s8) from %ir.addr_input + 4, align 4)
   ; CHECK-NEXT:   [[LDRSP32_:%[0-9]+]]:gpr32 = LDRSP32 %stack.0.addr_input, 8 :: (dereferenceable load (s32) from %ir.addr_input + 8)
   ; CHECK-NEXT:   [[LDRSP32_1:%[0-9]+]]:gpr32 = LDRSP32 %stack.0.addr_input, 12 :: (dereferenceable load (s32) from %ir.addr_input + 12)
-  ; CHECK-NEXT:   ADJCALLSTACKDOWN 4, 0, implicit-def $sp, implicit $sp
+  ; CHECK-NEXT:   ADJCALLSTACKDOWN 8, 0, implicit-def $sp, implicit $sp
   ; CHECK-NEXT:   STRSP32 [[LDRSP32_]], $sp, 0 :: (store (s32) into stack, align 1)
-  ; CHECK-NEXT:   STRSP32 [[LDRSP32_1]], $sp, 2 :: (store (s32) into stack + 2, align 1)
+  ; CHECK-NEXT:   STRSP32 [[LDRSP32_1]], $sp, 4 :: (store (s32) into stack + 4, align 1)
   ; CHECK-NEXT:   $r1 = COPY [[LDRZEXTSP8_]]
   ; CHECK-NEXT:   $r2 = COPY [[LDRZEXTSP8_1]]
   ; CHECK-NEXT:   CALL @structInputArg, csr, implicit-def $r0, implicit $sp, implicit $r1, implicit $r2, implicit-def $d1
-  ; CHECK-NEXT:   ADJCALLSTACKUP 4, 0, implicit-def $sp, implicit $sp
+  ; CHECK-NEXT:   ADJCALLSTACKUP 8, 0, implicit-def $sp, implicit $sp
   ; CHECK-NEXT:   [[COPY1:%[0-9]+]]:gpr32 = COPY $d1
   ; CHECK-NEXT:   $d1 = COPY [[COPY1]]
   ; CHECK-NEXT:   $r0 = COPY [[COPY]]
