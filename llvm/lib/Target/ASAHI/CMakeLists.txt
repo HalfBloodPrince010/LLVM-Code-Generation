@@ -15,6 +15,9 @@ tablegen(LLVM ASAHIGenMCCodeEmitter.inc -gen-emitter)
 add_public_tablegen_target(ASAHICommonTableGen)
 
 add_llvm_target(ASAHICodeGen
+    # Technically the AsmPrinter could be its own library, but this is how
+    # most targets expose their AsmPrinter.
+    ASAHIAsmPrinter.cpp
     ASAHIISelLowering.cpp
     ASAHISimpleConstantPropagation.cpp
     ASAHISubtarget.cpp
@@ -30,6 +33,7 @@ add_llvm_target(ASAHICodeGen
     ASAHIInfo
 
     Analysis
+    AsmPrinter
     CodeGen
     Core
     MC
