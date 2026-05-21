@@ -137,6 +137,52 @@ define i16 @foo1(i16 %arg) {
    ret i16 %res
 }
 
+declare void @takes_i32_stack_args(i16, i16, i16, i32, i32)
+
+; Fill R1-R3 with i16 arguments so both i32 call arguments are passed on the
+; stack. The call frame should reserve two 4-byte slots and store the i32
+; values at offsets 0 and 4. Using offset 2 for the second store would overlap
+; them.
+define void @callWithI32StackArgs(i16 %a, i32 %x, i32 %y) {
+; CHECK-LABEL: callWithI32StackArgs:
+; CHECK:       # %bb.0:
+; CHECK-NEXT:    subsp sp, sp, 16
+; CHECK-NEXT:    strsp32 d2, sp, 12 # 4-byte Folded Spill
+; CHECK-NEXT:    strsp32 d3, sp, 8 # 4-byte Folded Spill
+; CHECK-NEXT:    mov16 r4, r0
+; CHECK-NEXT:    ldrsp32 d3, sp, 16
+; CHECK-NEXT:    strsp32 d3, sp, 4
+; CHECK-NEXT:    strsp32 d1, sp, 0
+; CHECK-NEXT:    mov16 r2, r1
+; CHECK-NEXT:    mov16 r3, r1
+; CHECK-NEXT:    call takes_i32_stack_args
+; CHECK-NEXT:    mov16 r0, r4
+; CHECK-NEXT:    ldrsp32 d3, sp, 8 # 4-byte Folded Reload
+; CHECK-NEXT:    ldrsp32 d2, sp, 12 # 4-byte Folded Reload
+; CHECK-NEXT:    addsp sp, sp, 16
+; CHECK-NEXT:    ret
+  call void @takes_i32_stack_args(i16 %a, i16 %a, i16 %a, i32 %x, i32 %y)
+  ret void
+}
+
+; The first three i16 parameters consume R1-R3, so both i32 parameters arrive
+; on the stack. After the 4-byte callee spill, the generated loads should read
+; the two non-overlapping incoming slots at sp+4 and sp+8.
+define i32 @calleeWithI32StackArgs(i16 %a0, i16 %a1, i16 %a2, i32 %x, i32 %y) {
+; CHECK-LABEL: calleeWithI32StackArgs:
+; CHECK:       # %bb.0:
+; CHECK-NEXT:    subsp sp, sp, 4
+; CHECK-NEXT:    strsp32 d2, sp, 0 # 4-byte Folded Spill
+; CHECK-NEXT:    ldrsp32 d1, sp, 8
+; CHECK-NEXT:    ldrsp32 d2, sp, 4
+; CHECK-NEXT:    addi32 d1, d2, d1
+; CHECK-NEXT:    ldrsp32 d2, sp, 0 # 4-byte Folded Reload
+; CHECK-NEXT:    addsp sp, sp, 4
+; CHECK-NEXT:    ret
+  %sum = add i32 %x, %y
+  ret i32 %sum
+}
+
 ; Stress test for the stack lowering.
 ;
 ; At the entry of the function the stack looks like:
